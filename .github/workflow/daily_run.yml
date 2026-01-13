@@ -1,0 +1,19 @@
+name: Hourly Deal Update
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows you to run it manually from the app
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Scraper
+        run: python scraper.py
+      - name: Commit & Push changes
+        run: |
+          git config --global user.name 'DealBot'
+          git config --global user.email 'bot@dealbot.com'
+          git add index.html
+          git commit -m "Automated update: New 90% Deal"
+          git push
