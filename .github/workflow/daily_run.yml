@@ -1,19 +1,27 @@
 name: Hourly Deal Update
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch: # Allows you to run it manually from the app
+    - cron: '0 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write # Specifically tells GitHub this bot can write files
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # Updated version
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
       - name: Run Scraper
         run: python scraper.py
       - name: Commit & Push changes
         run: |
-          git config --global user.name 'DealBot'
-          git config --global user.email 'bot@dealbot.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m "Automated update: New 90% Deal"
+          git commit -m "New 90% Deal Found" || exit 0 # Don't fail if no new deals
           git push
