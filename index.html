@@ -1,0 +1,17 @@
+<body style="font-family:monospace; padding:20px; max-width:600px; margin:auto;">
+  <div style="background:#e7ffdb; padding:15px; border:1px solid #25d366; text-align:center;">
+    <strong>🔥 90% OFF ALERTS</strong><br>
+    <a href="YOUR_WHATSAPP_CHANNEL_LINK" style="color:#075e54;">[JOIN WHATSAPP CHANNEL]</a>
+  </div>
+  <input type="text" id="search" onkeyup="filter()" placeholder="Search deals (e.g. soap)..." 
+         style="width:100%; padding:10px; margin:20px 0; border:1px solid #000;">
+  <div id="links">
+    </div>
+  <script>
+    function filter() {
+      let val = document.getElementById('search').value.toLowerCase();
+      let items = document.getElementsByTagName('p');
+      for (let i of items) { i.style.display = i.innerText.toLowerCase().includes(val) ? '' : 'none'; }
+    }
+  </script>
+</body>
